@@ -1,15 +1,15 @@
 import { and, eq } from "drizzle-orm";
 import { Elysia, status } from "elysia";
 import * as z from "zod";
-import { db } from "../db";
-import { todos } from "../db/schema/todos";
+import { db } from "../../db";
+import { todos } from "../../db/schema/todos";
 import {
   createTodoSchema,
   todoResponseSchema,
   todosListResponseSchema,
   updateTodoSchema,
-} from "../schemas/todos";
-import { authService } from "../services/auth";
+} from "../../schemas/todos";
+import { authService } from "../auth/service";
 
 export const todosRoutes = new Elysia({ prefix: "/todos" })
   .use(authService)

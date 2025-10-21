@@ -1,19 +1,17 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { users } from "./auth";
 
-export const todos = sqliteTable("todos", {
-  id: text("id").primaryKey(),
+export const todos = pgTable("todos", {
+  id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
   description: text("description"),
-  completed: integer("completed", { mode: "boolean" }).default(false).notNull(),
+  completed: boolean("completed").default(false).notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .$defaultFn(() => new Date())
-    .notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .$defaultFn(() => new Date())
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
 });

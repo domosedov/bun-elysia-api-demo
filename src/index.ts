@@ -1,9 +1,9 @@
 import openapi, { fromTypes } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import * as z from "zod";
-import { OpenAPI } from "./auth/openapi";
-import { todosRoutes } from "./routes/todos";
-import { authService } from "./services/auth";
+import { OpenAPI } from "./modules/auth/openapi";
+import { authService } from "./modules/auth/service";
+import { todosRoutes } from "./modules/todos";
 
 const authOpenApiComponents = await OpenAPI.components;
 const authOpenApiPaths = await OpenAPI.getPaths();
