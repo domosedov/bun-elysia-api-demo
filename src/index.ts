@@ -1,25 +1,9 @@
 import openapi, { fromTypes } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import * as z from "zod";
-import { auth } from "./auth";
 import { OpenAPI } from "./auth/openapi";
-
-const betterAuth = new Elysia({ name: "better-auth" })
-  .mount("/auth", auth.handler)
-  .macro({
-    auth: {
-      async resolve({ status, request: { headers } }) {
-        const session = await auth.api.getSession({
-          headers,
-        });
-        if (!session) return status(401);
-        return {
-          user: session.user,
-          session: session.session,
-        };
-      },
-    },
-  });
+import { todosRoutes } from "./routes/todos";
+import { authService } from "./services/auth";
 
 const authOpenApiComponents = await OpenAPI.components;
 const authOpenApiPaths = await OpenAPI.getPaths();
@@ -32,7 +16,18 @@ const app = new Elysia()
         paths: authOpenApiPaths,
       },
       mapJsonSchema: {
-        zod: z.toJSONSchema,
+        zod: (io: Parameters<typeof z.toJSONSchema>[0]) => {
+          return z.toJSONSchema(io, {
+            unrepresentable: "any",
+            override: (ctx) => {
+              const def = ctx.zodSchema._zod.def;
+              if (def.type === "date") {
+                ctx.jsonSchema.type = "string";
+                ctx.jsonSchema.format = "date-time";
+              }
+            },
+          });
+        },
       },
       references: fromTypes(
         process.env.NODE_ENV === "production"
@@ -44,7 +39,8 @@ const app = new Elysia()
       ),
     })
   )
-  .use(betterAuth)
+  .use(authService)
+  .use(todosRoutes)
   .get("/", () => ({ message: "Hello Elysia" }), {
     response: z.object({
       message: z.string(),
