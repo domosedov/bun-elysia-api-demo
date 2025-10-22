@@ -8,33 +8,33 @@ export const selectTodoSchema = createSelectSchema(todos)
 
 // Схема для создания todo (только необходимые поля)
 export const createTodoSchema = insertTodoSchema
-  .pick({
-    title: true,
-    description: true,
-  })
-  .extend({
-    title: z
-      .string()
-      .min(1, 'Заголовок обязателен')
-      .max(255, 'Заголовок слишком длинный'),
-  })
+	.pick({
+		title: true,
+		description: true,
+	})
+	.extend({
+		title: z
+			.string()
+			.min(1, 'Заголовок обязателен')
+			.max(255, 'Заголовок слишком длинный'),
+	})
 
 // Схема для обновления todo (все поля опциональны кроме id)
 export const updateTodoSchema = insertTodoSchema
-  .partial()
-  .omit({
-    id: true,
-    userId: true,
-    createdAt: true,
-    updatedAt: true,
-  })
-  .extend({
-    title: z
-      .string()
-      .min(1, 'Заголовок обязателен')
-      .max(255, 'Заголовок слишком длинный')
-      .optional(),
-  })
+	.partial()
+	.omit({
+		id: true,
+		userId: true,
+		createdAt: true,
+		updatedAt: true,
+	})
+	.extend({
+		title: z
+			.string()
+			.min(1, 'Заголовок обязателен')
+			.max(255, 'Заголовок слишком длинный')
+			.optional(),
+	})
 
 // Схема для ответа с todo (полная схема из базы)
 export const todoResponseSchema = selectTodoSchema
