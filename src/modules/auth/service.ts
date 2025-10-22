@@ -9,7 +9,7 @@ export const authService = new Elysia({ name: 'better-auth' })
         const session = await auth.api.getSession({
           headers,
         })
-        if (!session) return status(401)
+        if (!session) return status(401, { message: 'Unauthorized' })
         return {
           user: session.user,
           session: session.session,

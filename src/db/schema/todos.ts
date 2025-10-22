@@ -1,5 +1,5 @@
 import { boolean, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { users } from './auth'
+import { users } from '~/db/schema/auth'
 
 export const todos = pgTable('todos', {
   id: uuid('id').primaryKey().defaultRandom(),

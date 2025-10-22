@@ -1,6 +1,6 @@
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
-import { todos } from '../../db/schema/todos'
+import { todos } from '~/db/schema/todos'
 
 // Автоматически генерируемые схемы из Drizzle
 export const insertTodoSchema = createInsertSchema(todos)

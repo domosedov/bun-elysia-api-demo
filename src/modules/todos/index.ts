@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm'
 import { Elysia, status } from 'elysia'
 import * as z from 'zod'
-import { db } from '../../db'
-import { todos } from '../../db/schema/todos'
-import { authService } from '../auth/service'
+import { db } from '~/db'
+import { todos } from '~/db/schema/todos'
+import { authService } from '~/modules/auth/service'
 import {
   createTodoSchema,
   todoResponseSchema,
