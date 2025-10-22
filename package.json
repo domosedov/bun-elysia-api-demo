@@ -1,6 +1,9 @@
 {
 	"name": "app",
 	"version": "0.0.0",
+	"module": "src/index.js",
+	"type": "module",
+	"private": true,
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "bun run --watch src/index.ts",
@@ -32,8 +35,5 @@
 		"oxlint": "^1.23.0",
 		"oxlint-tsgolint": "^0.2.0",
 		"typescript": "^5.9.3"
-	},
-	"module": "src/index.js",
-	"type": "module",
-	"private": true
+	}
 }
