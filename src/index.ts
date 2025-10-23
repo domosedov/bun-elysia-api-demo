@@ -31,14 +31,9 @@ const app = new Elysia()
           });
         },
       },
-      references: fromTypes(
-        process.env.NODE_ENV === "production"
-          ? "dist/index.d.ts"
-          : "src/index.ts",
-        {
-          debug: true,
-        }
-      ),
+      references: fromTypes("src/index.ts", {
+        debug: true,
+      }),
     })
   )
   .use(authModule)

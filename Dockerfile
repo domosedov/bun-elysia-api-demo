@@ -8,7 +8,6 @@ ARG NODE_ENV=production
 ARG DATABASE_URL
 ARG REDIS_URL
 ARG BETTER_AUTH_SECRET
-ARG BETTER_AUTH_URL
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
@@ -33,7 +32,6 @@ ENV NODE_ENV=${NODE_ENV}
 ENV DATABASE_URL=${DATABASE_URL}
 ENV REDIS_URL=${REDIS_URL}
 ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-ENV BETTER_AUTH_URL=${BETTER_AUTH_URL}
 
 # Run type checking instead of build (since there's no build script)
 RUN bun run typecheck
@@ -52,7 +50,6 @@ ENV NODE_ENV=${NODE_ENV}
 ENV DATABASE_URL=${DATABASE_URL}
 ENV REDIS_URL=${REDIS_URL}
 ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-ENV BETTER_AUTH_URL=${BETTER_AUTH_URL}
 
 # Create startup script to run migrations before starting the app
 RUN echo '#!/bin/sh\n\
