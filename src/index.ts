@@ -44,9 +44,17 @@ const app = new Elysia()
     }),
     tags: ["Home"],
   })
-  .get("/ping", () => "pong", {
-    response: z.string(),
-  })
+  .get(
+    "/ping",
+    ({ server, request }) => {
+      console.log(server, request);
+
+      return "pong";
+    },
+    {
+      response: z.string(),
+    }
+  )
   .get(
     "/health",
     () => ({ status: "ok", timestamp: new Date().toISOString() }),
