@@ -1,4 +1,4 @@
-// import { cors } from "@elysiajs/cors";
+import { cors } from "@elysiajs/cors";
 import openapi, { fromTypes } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import * as z from "zod";
@@ -10,7 +10,7 @@ const authOpenApiComponents = await OpenAPI.components;
 const authOpenApiPaths = await OpenAPI.getPaths();
 
 const app = new Elysia()
-  // .use(cors())
+  .use(cors())
   .use(
     openapi({
       documentation: {
@@ -57,7 +57,10 @@ const app = new Elysia()
   )
   .get(
     "/health",
-    () => ({ status: "ok", timestamp: new Date().toISOString() }),
+    async () => ({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+    }),
     {
       response: z.object({
         status: z.string(),
