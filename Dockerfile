@@ -7,6 +7,11 @@ ARG DATABASE_URL
 ARG REDIS_URL
 ARG BETTER_AUTH_SECRET
 
+ENV NODE_ENV=production
+ENV DATABASE_URL=${DATABASE_URL}
+ENV REDIS_URL=${REDIS_URL}
+ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+
 # Устанавливаем Python и build tools для компиляции нативных модулей
 RUN apt-get update && apt-get install -y \
     python3 \
@@ -17,18 +22,10 @@ RUN apt-get update && apt-get install -y \
 # Cache packages installation
 COPY package.json package.json
 COPY bun.lock bun.lock
-COPY tsconfig.json tsconfig.json
 
 RUN bun install
 
-COPY ./src ./src
-COPY ./drizzle ./drizzle
-COPY ./migrate.ts ./migrate.ts
-
-ENV NODE_ENV=production
-ENV DATABASE_URL=${DATABASE_URL}
-ENV REDIS_URL=${REDIS_URL}
-ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+COPY . .
 
 RUN bun build \
 	--compile \
@@ -41,22 +38,13 @@ FROM oven/bun AS runtime
 
 WORKDIR /app
 
-# Обязательные переменные окружения для runtime
-ARG DATABASE_URL
-ARG REDIS_URL
-ARG BETTER_AUTH_SECRET
-
 # Копируем скомпилированный сервер
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/server server
-
-# Копируем файлы миграций справочника
+COPY --from=build /app/tsconfig.json ./tsconfig.json
 COPY --from=build /app/drizzle ./drizzle
 COPY --from=build /app/migrate.ts ./migrate.ts
-
-ENV NODE_ENV=production
-ENV DATABASE_URL=${DATABASE_URL}
-ENV REDIS_URL=${REDIS_URL}
-ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
 
 # Создаем скрипт запуска с миграциями
 RUN echo '#!/bin/sh\n\

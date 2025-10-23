@@ -2,19 +2,6 @@
 	"name": "demo-api",
 	"version": "0.0.0",
 	"module": "src/index.js",
-	"type": "module",
-	"private": true,
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "bun run --watch src/index.ts",
-		"lint": "oxlint --type-aware",
-		"lint:fix": "oxlint --type-aware --fix",
-		"format": "biome format --write .",
-		"typecheck": "tsc --noEmit",
-		"auth:generate": "bun node_modules/@better-auth/cli/dist/index.mjs generate --config src/modules/auth/index.ts --output src/db/schema/auth.ts",
-		"db:generate": "bun drizzle-kit generate --config drizzle.config.ts",
-		"db:migrate": "bun run migrate.ts"
-	},
 	"dependencies": {
 		"@elysiajs/cors": "^1.4.0",
 		"@elysiajs/openapi": "^1.4.11",
@@ -35,5 +22,18 @@
 		"oxlint": "^1.24.0",
 		"oxlint-tsgolint": "^0.2.1",
 		"typescript": "^5.9.3"
-	}
+	},
+	"private": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts",
+		"lint": "oxlint --type-aware",
+		"lint:fix": "oxlint --type-aware --fix",
+		"format": "biome format --write .",
+		"typecheck": "tsc --noEmit",
+		"auth:generate": "bun node_modules/@better-auth/cli/dist/index.mjs generate --config src/modules/auth/index.ts --output src/db/schema/auth.ts",
+		"db:generate": "bun drizzle-kit generate --config drizzle.config.ts",
+		"db:migrate": "bun run migrate.ts"
+	},
+	"type": "module"
 }
