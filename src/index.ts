@@ -2,8 +2,8 @@ import openapi, { fromTypes } from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
 import * as z from 'zod'
 import { OpenAPI } from '~/modules/auth/openapi'
-import { authService } from '~/modules/auth/service'
-import { todosRoutes } from '~/modules/todos'
+import { authModule } from '~/modules/auth/service'
+import { todosModule } from '~/modules/todos'
 
 const authOpenApiComponents = await OpenAPI.components
 const authOpenApiPaths = await OpenAPI.getPaths()
@@ -39,14 +39,25 @@ const app = new Elysia()
 			),
 		}),
 	)
-	.use(authService)
-	.use(todosRoutes)
+	.use(authModule)
+	.use(todosModule)
 	.get('/', () => ({ message: 'Hello Elysia' }), {
 		response: z.object({
 			message: z.string(),
 		}),
 		tags: ['Home'],
 	})
+	.get(
+		'/health',
+		() => ({ status: 'ok', timestamp: new Date().toISOString() }),
+		{
+			response: z.object({
+				status: z.string(),
+				timestamp: z.string(),
+			}),
+			tags: ['Health'],
+		},
+	)
 	.listen(3000)
 
 console.log(

@@ -1,7 +1,7 @@
 import Elysia from 'elysia'
 import { auth } from '.'
 
-export const authService = new Elysia({ name: 'better-auth' })
+export const authModule = new Elysia({ name: 'better-auth' })
 	.mount('/auth', auth.handler)
 	.macro({
 		auth: {

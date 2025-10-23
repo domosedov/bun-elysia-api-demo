@@ -3,7 +3,7 @@ import { Elysia, status } from 'elysia'
 import * as z from 'zod'
 import { db } from '~/db'
 import { todos } from '~/db/schema/todos'
-import { authService } from '~/modules/auth/service'
+import { authModule } from '~/modules/auth/service'
 import {
 	createTodoSchema,
 	todoResponseSchema,
@@ -11,8 +11,8 @@ import {
 	updateTodoSchema,
 } from './schema'
 
-export const todosRoutes = new Elysia({ prefix: '/todos' })
-	.use(authService)
+export const todosModule = new Elysia({ prefix: '/todos' })
+	.use(authModule)
 	// Получить все todos пользователя
 	.get(
 		'',
