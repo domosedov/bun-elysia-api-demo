@@ -67,5 +67,5 @@ chmod +x /usr/src/app/start.sh
 
 # run the app
 USER bun
-EXPOSE 3000/tcp
+EXPOSE 8000/tcp
 ENTRYPOINT ["/usr/src/app/start.sh"]
