@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
 # Cache packages installation
 COPY package.json package.json
 COPY bun.lock bun.lock
+COPY tsconfig.json tsconfig.json
 
 RUN bun install
 
