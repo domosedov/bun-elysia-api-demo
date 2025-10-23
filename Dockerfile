@@ -22,6 +22,8 @@ COPY tsconfig.json tsconfig.json
 RUN bun install
 
 COPY ./src ./src
+COPY ./drizzle ./drizzle
+COPY ./migrate.ts ./migrate.ts
 
 ENV NODE_ENV=production
 ENV DATABASE_URL=${DATABASE_URL}
