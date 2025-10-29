@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core'
+import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
 	id: text('id').primaryKey(),
@@ -66,4 +66,11 @@ export const verifications = pgTable('verifications', {
 		.$defaultFn(() => new Date())
 		.$onUpdate(() => new Date())
 		.notNull(),
+})
+
+export const jwkss = pgTable('jwkss', {
+	id: text('id').primaryKey(),
+	publicKey: text('public_key').notNull(),
+	privateKey: text('private_key').notNull(),
+	createdAt: timestamp('created_at').notNull(),
 })
